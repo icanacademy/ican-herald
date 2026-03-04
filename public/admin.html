@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICAN Herald - Admin</title>
+  <script>
+    (function(){
+      var h = location.hostname;
+      var m = h.indexOf('studentbooks') !== -1 ? 'books' :
+              (h === 'localhost' || h === '127.0.0.1') ? 'both' : 'herald';
+      document.documentElement.setAttribute('data-site', m);
+      if (m === 'books') document.title = 'ICAN Original Books - Manage';
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="admin-page">
+  <header class="site-header">
+    <div class="header-content">
+      <div class="brand">
+        <img src="/logo.png" alt="ICAN Herald" class="brand-logo herald-only">
+        <span class="brand-text books-only">ICAN Original Books</span>
+      </div>
+      <div class="header-right">
+        <nav class="header-nav">
+          <a href="/" class="nav-link">View Site</a>
+          <button id="logout-btn" class="btn btn-outline" style="display:none;">Logout</button>
+        </nav>
+        <img src="/ican-logo.png" alt="ICAN Academy" class="header-ican-logo">
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <!-- Admin Tabs — always visible -->
+    <div class="admin-tab-bar">
+      <button class="admin-tab-btn active" data-admin-tab="books">Original Books</button>
+      <button class="admin-tab-btn" data-admin-tab="herald">Herald Editions</button>
+    </div>
+
+    <!-- Books Tab (login required) -->
+    <div id="admin-books" class="admin-tab-content">
+      <!-- Books Login Gate -->
+      <section id="books-login-section" class="admin-section login-section">
+        <div class="login-card">
+          <h2>Books Admin</h2>
+          <p class="login-subtitle">Login required to manage Original Books.</p>
+          <form id="books-login-form">
+            <div class="form-group">
+              <label for="books-password">Password</label>
+              <input type="password" id="books-password" name="password" required placeholder="Enter admin password">
+            </div>
+            <div id="books-login-error" class="error-msg" style="display:none;"></div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Books Dashboard (hidden until authenticated) -->
+      <div id="books-dashboard" style="display:none;">
+      <!-- Book Upload Form -->
+      <div class="admin-card">
+        <h2>Upload New Book</h2>
+        <form id="book-upload-form">
+          <div class="form-group">
+            <label for="book-title">Book Title</label>
+            <input type="text" id="book-title" name="title" required placeholder="e.g. My Adventure Story">
+          </div>
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label for="book-author">Author (Student)</label>
+              <input type="text" id="book-author" name="author" required placeholder="e.g. Park Ye Jin">
+            </div>
+            <div class="form-group">
+              <label for="book-teacher">Teacher</label>
+              <input type="text" id="book-teacher" name="teacher" required placeholder="e.g. Teacher Sarah">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="book-date">Published Date</label>
+            <input type="date" id="book-date" name="publishedDate" required>
+          </div>
+          <div class="form-group">
+            <label for="book-pdf-file">PDF File</label>
+            <div class="file-input-wrapper">
+              <input type="file" id="book-pdf-file" name="pdf" accept=".pdf" required>
+              <div class="file-input-label">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                </svg>
+                <span id="book-file-label">Choose a PDF file...</span>
+              </div>
+            </div>
+          </div>
+          <div id="book-upload-progress" class="upload-progress" style="display:none;">
+            <div class="progress-bar">
+              <div id="book-upload-progress-fill" class="progress-fill"></div>
+            </div>
+            <span id="book-upload-progress-text">Uploading... 0%</span>
+          </div>
+          <div id="book-upload-error" class="error-msg" style="display:none;"></div>
+          <div id="book-upload-success" class="success-msg" style="display:none;"></div>
+          <button type="submit" id="book-upload-btn" class="btn btn-primary">Upload Book</button>
+        </form>
+      </div>
+
+      <!-- Books List -->
+      <div class="admin-card">
+        <h2>Published Books</h2>
+        <div id="books-list" class="editions-list">
+          <!-- Populated by JS -->
+        </div>
+        <div id="no-books" class="empty-state-small" style="display:none;">
+          <p>No books uploaded yet.</p>
+        </div>
+      </div>
+      </div><!-- /books-dashboard -->
+    </div>
+
+    <!-- Herald Tab (needs login) -->
+    <div id="admin-herald" class="admin-tab-content" style="display:none;">
+      <!-- Login Gate (shown if not authenticated) -->
+      <section id="login-section" class="admin-section login-section">
+        <div class="login-card">
+          <h2>Admin Login</h2>
+          <p class="login-subtitle">Login required to manage Herald editions.</p>
+          <form id="login-form">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" required placeholder="Enter admin password">
+            </div>
+            <div id="login-error" class="error-msg" style="display:none;"></div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Herald Dashboard (hidden until authenticated) -->
+      <div id="herald-dashboard" style="display:none;">
+        <!-- Upload Form -->
+        <div class="admin-card">
+          <h2>Upload New Edition</h2>
+          <form id="upload-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="title">Edition Title</label>
+                <input type="text" id="title" name="title" required placeholder="e.g. ICAN Herald">
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="season">Season</label>
+                <select id="season" name="season" required>
+                  <option value="">Select season...</option>
+                  <option value="Winter">Winter</option>
+                  <option value="Spring">Spring</option>
+                  <option value="Summer">Summer</option>
+                  <option value="Fall">Fall</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="year">Year</label>
+                <input type="number" id="year" name="year" required min="2000" max="2030" value="2026">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pdf-file">PDF File</label>
+              <div class="file-input-wrapper">
+                <input type="file" id="pdf-file" name="pdf" accept=".pdf" required>
+                <div class="file-input-label">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                  </svg>
+                  <span id="file-label">Choose a PDF file...</span>
+                </div>
+              </div>
+            </div>
+            <div id="upload-progress" class="upload-progress" style="display:none;">
+              <div class="progress-bar">
+                <div id="upload-progress-fill" class="progress-fill"></div>
+              </div>
+              <span id="upload-progress-text">Uploading... 0%</span>
+            </div>
+            <div id="upload-error" class="error-msg" style="display:none;"></div>
+            <div id="upload-success" class="success-msg" style="display:none;"></div>
+            <button type="submit" id="upload-btn" class="btn btn-primary">Upload Edition</button>
+          </form>
+        </div>
+
+        <!-- Editions List -->
+        <div class="admin-card">
+          <h2>Published Editions</h2>
+          <div id="editions-list" class="editions-list">
+            <!-- Populated by JS -->
+          </div>
+          <div id="no-editions" class="empty-state-small" style="display:none;">
+            <p>No editions uploaded yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

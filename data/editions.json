@@ -1,0 +1,38 @@
+[
+  {
+    "id": "4a77414f-8ba6-466d-b6da-732f15709e79",
+    "title": "East Asia and the World",
+    "slug": "east-asia-and-the-world-summer-2019",
+    "season": "Summer",
+    "year": 2019,
+    "filename": "1772000766072-8640931a.pdf",
+    "createdAt": "2026-02-25T06:26:06.097Z"
+  },
+  {
+    "id": "8aca3933-374d-4d5c-9a65-f08aad3b18fc",
+    "title": "Corona Virus",
+    "slug": "corona-virus-winter-2019",
+    "season": "Winter",
+    "year": 2019,
+    "filename": "1772000864906-24412251.pdf",
+    "createdAt": "2026-02-25T06:27:44.916Z"
+  },
+  {
+    "id": "3fe5085e-d8f2-46ed-9c78-7664f75edd0b",
+    "title": "Deep Freeze",
+    "slug": "deep-freeze-winter-2018",
+    "season": "Winter",
+    "year": 2018,
+    "filename": "1772001090981-c3c19bfe.pdf",
+    "createdAt": "2026-02-25T06:31:31.014Z"
+  },
+  {
+    "id": "d1950390-dd3d-4177-8f69-b5900fd6c53b",
+    "title": "AI Literacy",
+    "slug": "ai-literacy-winter-2026",
+    "season": "Winter",
+    "year": 2026,
+    "filename": "1772593353009-a1ddccb2.pdf",
+    "createdAt": "2026-03-04T03:02:33.143Z"
+  }
+]

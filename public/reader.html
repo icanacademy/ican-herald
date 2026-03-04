@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICAN Herald - Reader</title>
+  <script>
+    (function(){
+      var h = location.hostname;
+      var m = h.indexOf('studentbooks') !== -1 ? 'books' :
+              (h === 'localhost' || h === '127.0.0.1') ? 'both' : 'herald';
+      document.documentElement.setAttribute('data-site', m);
+      if (m === 'books') document.title = 'ICAN Original Books - Reader';
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css?v=6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="reader-page">
+  <header class="reader-header">
+    <a href="/" class="back-link">&larr; <span class="herald-only">All Editions</span><span class="books-only">All Books</span></a>
+    <img src="/logo.png" alt="ICAN Herald" class="reader-logo herald-only">
+    <h1 id="edition-title" class="reader-title">Loading...</h1>
+    <button id="fullscreen-btn" class="btn-icon" title="Toggle Fullscreen">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/>
+      </svg>
+    </button>
+  </header>
+
+  <main class="reader-main">
+    <div id="loading-overlay" class="loading-overlay">
+      <div class="loading-content">
+        <div class="spinner large"></div>
+        <p id="loading-text">Loading...</p>
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flipbook-container">
+      <button id="prev-btn" class="nav-btn nav-prev" title="Previous Page">&lsaquo;</button>
+      <div id="flipbook" class="flipbook"></div>
+      <button id="next-btn" class="nav-btn nav-next" title="Next Page">&rsaquo;</button>
+    </div>
+
+    <div class="reader-controls">
+      <button id="mobile-prev-btn" class="mobile-nav-btn" title="Previous Page">&lsaquo;</button>
+      <div class="zoom-controls">
+        <button id="zoom-out-btn" class="btn-icon" title="Zoom Out (Ctrl -)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </button>
+        <span id="zoom-level" class="zoom-level">100%</span>
+        <button id="zoom-in-btn" class="btn-icon" title="Zoom In (Ctrl +)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </button>
+        <button id="zoom-reset-btn" class="btn-icon" title="Reset Zoom">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        </button>
+      </div>
+      <span id="page-info" class="page-info">Page 1 of 1</span>
+      <button id="mobile-next-btn" class="mobile-nav-btn" title="Next Page">&rsaquo;</button>
+    </div>
+  </main>
+
+  <script src="/lib/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="/lib/turn.min.js"></script>
+  <script src="/js/reader.js?v=6"></script>
+</body>
+</html>

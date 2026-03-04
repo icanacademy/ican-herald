@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICAN Herald</title>
+  <script>
+    (function(){
+      var h = location.hostname;
+      var m = h.indexOf('studentbooks') !== -1 ? 'books' :
+              (h === 'localhost' || h === '127.0.0.1') ? 'both' : 'herald';
+      document.documentElement.setAttribute('data-site', m);
+      if (m === 'books') document.title = 'ICAN Original Books';
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="landing-page">
+  <header class="site-header">
+    <div class="header-content">
+      <div class="brand">
+        <img src="/logo.png" alt="ICAN Herald" class="brand-logo herald-only">
+        <span class="brand-text books-only">ICAN Original Books</span>
+      </div>
+      <div class="header-right">
+        <button class="upload-cta-btn books-only" type="button">Upload a Book</button>
+        <img src="/ican-logo.png" alt="ICAN Academy" class="header-ican-logo">
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-banner">
+    <!-- Aurora gradient blobs (books only, CSS-hidden on herald) -->
+    <div class="hero-aurora books-only">
+      <div class="hero-aurora-blob"></div>
+      <div class="hero-aurora-blob"></div>
+      <div class="hero-aurora-blob"></div>
+    </div>
+    <!-- Grain texture overlay (books only) -->
+    <svg class="hero-grain books-only" width="100%" height="100%">
+      <filter id="grain-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#grain-filter)"/>
+    </svg>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">ICAN Language Center</p>
+      <h1 class="hero-title">
+        <span class="herald-only">The ICAN Herald</span>
+        <span class="books-only">ICAN Original Books</span>
+      </h1>
+      <p class="hero-subtitle">
+        <span class="herald-only">Your school newsletter, now in a digital magazine format.</span>
+        <span class="books-only">Student-created stories, now in a digital flipbook format.</span>
+      </p>
+    </div>
+  </section>
+
+  <main class="landing-main">
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="herald">The Herald</button>
+      <button class="tab-btn" data-tab="books">Original Books</button>
+    </div>
+
+    <!-- Herald content -->
+    <div id="herald-section" class="tab-content">
+      <section id="featured-section" class="featured-section" style="display:none;">
+        <!-- Latest edition featured here by JS -->
+      </section>
+
+      <section id="older-section" class="older-section" style="display:none;">
+        <h3 class="older-heading">Past Editions</h3>
+        <div id="older-grid" class="older-grid">
+          <!-- Older edition cards inserted by JS -->
+        </div>
+      </section>
+
+      <div id="empty-state" class="empty-state" style="display:none;">
+        <p>No editions published yet. Check back soon!</p>
+      </div>
+      <div id="loading-state" class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading editions...</p>
+      </div>
+    </div>
+
+    <!-- Books content -->
+    <div id="books-section" class="tab-content" style="display:none;">
+      <div id="books-grid" class="older-grid"></div>
+      <div id="books-empty" class="empty-state" style="display:none;">
+        <p>No books published yet. Check back soon!</p>
+      </div>
+      <div id="books-loading" class="loading-state" style="display:none;">
+        <div class="spinner"></div>
+        <p>Loading books...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 ICAN Language Center. All rights reserved. <a href="/admin" class="admin-mini-link">Manage</a></p>
+  </footer>
+
+  <!-- Upload Modal (books only) -->
+  <div id="upload-modal" class="upload-modal books-only">
+    <div class="upload-modal-backdrop"></div>
+    <div class="upload-modal-card">
+      <button class="upload-modal-close" type="button">&times;</button>
+      <h2>Share Your Story</h2>
+      <p class="upload-modal-subtitle">Upload your student's book as a PDF</p>
+      <form id="modal-upload-form">
+        <div class="form-group">
+          <label for="modal-book-title">Book Title</label>
+          <input type="text" id="modal-book-title" placeholder="e.g. The Great Adventure" required>
+        </div>
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="modal-book-author">Author / Student</label>
+            <input type="text" id="modal-book-author" placeholder="Student name" required>
+          </div>
+          <div class="form-group">
+            <label for="modal-book-teacher">Teacher</label>
+            <input type="text" id="modal-book-teacher" placeholder="Teacher name" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="modal-book-date">Published Date</label>
+          <input type="date" id="modal-book-date" required>
+        </div>
+        <div class="form-group">
+          <label>PDF File</label>
+          <div class="file-input-wrapper">
+            <input type="file" id="modal-book-file" accept=".pdf" required>
+            <div class="file-input-label">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span id="modal-file-label">Choose a PDF file...</span>
+            </div>
+          </div>
+        </div>
+        <div id="modal-upload-progress" class="upload-progress" style="display:none;">
+          <div class="progress-bar"><div id="modal-upload-progress-fill" class="progress-fill" style="width:0%"></div></div>
+          <span id="modal-upload-progress-text">Uploading... 0%</span>
+        </div>
+        <div id="modal-upload-error" class="error-msg" style="display:none;"></div>
+        <div id="modal-upload-success" class="success-msg" style="display:none;"></div>
+        <button type="submit" class="btn btn-primary" id="modal-upload-btn" style="width:100%;">Upload Book</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/lib/pdf.min.js"></script>
+  <script src="/js/landing.js"></script>
+</body>
+</html>
